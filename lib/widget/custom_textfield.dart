@@ -18,26 +18,33 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       controller: controller,
       cursorColor: Colors.black,
+      validator: (value){
+        if(value!.isEmpty){
+          return 'field required';
+        }
+        return null;
+      },
       decoration: InputDecoration(
         hintText: hintText,
         filled: true,
-        fillColor: whiteColor,
+        fillColor: Colors.grey.shade300,
        // suffixIcon: Icon(Icons.visibility,color: Colors.grey,),
-        hintStyle: TextStyle(fontSize: 12.0,color: Colors.grey),
+        hintStyle: TextStyle(fontSize: 12.0,color: Colors.black),
         enabledBorder:  OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.0),
-          borderSide: const BorderSide(color: Colors.white),
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide:  BorderSide(color: Colors.grey.shade300),
         ),
-        focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: whiteColor, width: 2.0),
+        focusedBorder:  OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(color: Colors.grey.shade300, width: 2.0),
         ),
       ),
-      onSubmitted: (String value) {
-        debugPrint(value);
-      },
+      // onSubmitted: (String value) {
+      //   debugPrint(value);
+      // },
     );
   }
 }

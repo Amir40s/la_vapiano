@@ -17,7 +17,8 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Timer(const Duration(seconds: 4),(){
-      Get.offAll(const ConfirmScreen());
+      //Get.offAll(const ConfirmScreen());
+      Get.offAll( LoginScreen());
     });
     return Scaffold(
       backgroundColor: primaryColor,

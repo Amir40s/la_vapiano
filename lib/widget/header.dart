@@ -13,41 +13,40 @@ import 'package:provider/provider.dart';
 
 class Header extends StatelessWidget {
   bool isButton;
+  final String text;
    Header({
-    Key? key, this.isButton = false,
+    Key? key, this.isButton = false, required this.text,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        if(isButton == false)
-        Container(
-          width: Get.width,
-          height: defaultHeaderHeight,
-          child: Image.asset(header_bg,fit: BoxFit.cover,),
-        ),
         SafeArea(
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: isButton ? MainAxisAlignment.spaceBetween : MainAxisAlignment.start,
              children: [
-               Container(
-                   height: defaultHeaderHeight / 2,
-                   margin:  EdgeInsets.only(left: isButton ? 0.0 : 20.0),
-                   child: Image.asset(ic_logo,fit: BoxFit.cover,)),
+               GestureDetector(
+                 onTap: (){
+                   Get.back();
+                 },
+                 child: Container(
+                     height: defaultHeaderHeight / 1.9,
+                     margin:  EdgeInsets.only(left: isButton ? 0.0 : 20.0,top: 10.0),
+                     child: Image.asset(ic_back_fancy,fit: BoxFit.cover,)),
+               ),
 
+
+              if(isButton == false)
+              SizedBox(width: Get.width * .2,),
+              TextWidget(text: text, size: 16.0,color: Colors.black,),
 
               isButton ?   Container(
                 child: ButtonWidget(
                     text: "Menu", onClicked: (){
-                      Get.to(HomeScreen());
+                      Get.to(HomeScreen(menuName: '',));
                 }, width: 100.0, height: 40.0),
-              )
-               : Container(
-                  height: 25,
-                  margin: const EdgeInsets.only(right: 20),
-                  child: Image.asset(ic_cart,fit: BoxFit.cover,)
-              ),
+              ) : SizedBox()
              ],
             )
         )

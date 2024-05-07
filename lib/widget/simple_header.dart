@@ -35,8 +35,12 @@ class SimpleHeader extends StatelessWidget {
 
 
              Container(
-               width: Get.width/2,
-                child: Center(child: TextWidget(text: "Menu",size: 24.0,color: Colors.black))
+               width: Get.width/1.5,
+                child: Center(child:  Container(
+                    height: 80.0,
+                    padding: EdgeInsets.all(8.0),
+                    child: Center(child: Image.asset(ic_logo))
+                ),)
               )
             ]
             )

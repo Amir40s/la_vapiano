@@ -21,7 +21,7 @@ class TableSlipScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Header(),
+            Header(text: '',),
 
             SizedBox(height: 30.0,),
             TextWidget(text: must_login_text, size: 22.0,fontFamily: oleoFont,color: Colors.white,),

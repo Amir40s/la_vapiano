@@ -13,7 +13,7 @@ class CustomRichText extends StatelessWidget {
   Widget build(BuildContext context) {
     return RichText(text: TextSpan(
       text: firstText,
-      style: const TextStyle(color: whiteColor),
+      style: const TextStyle(color: Colors.black),
       children: <InlineSpan>[
         const WidgetSpan(
             alignment: PlaceholderAlignment.baseline,
@@ -21,7 +21,7 @@ class CustomRichText extends StatelessWidget {
             child: SizedBox(width: 5.0)),
         TextSpan(
           text: secondText,
-          style: const TextStyle(color: secondaryColor),
+          style: const TextStyle(color: primaryColor),
           recognizer: TapGestureRecognizer()
             ..onTap = press,
         ),

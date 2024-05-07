@@ -7,7 +7,8 @@ import 'package:la_vapiano/widget/text_widget.dart';
 class MenuContainer extends StatelessWidget {
   final String text,image;
   double textSize;
-   MenuContainer({super.key, required this.text, required this.image,this.textSize = 16.0});
+   bool isTransparent;
+   MenuContainer({super.key, required this.text, required this.image,this.textSize = 16.0,  this.isTransparent = false});
 
 
 
@@ -16,17 +17,22 @@ class MenuContainer extends StatelessWidget {
     return Stack(
       alignment: AlignmentDirectional.center,
       children:[
-        Opacity(
-          opacity: 0.3,
-          child: Container(
-            width: Get.width,
-            height: 60,
-            decoration: BoxDecoration(
-                color: whiteColor,
-                borderRadius: BorderRadius.circular(10.0)
-            ),
-            padding: EdgeInsets.all(10.0),
+        Container(
+          width: Get.width,
+          height: 60,
+          decoration: BoxDecoration(
+              color: isTransparent ? Colors.white.withOpacity(0.7) :  Colors.white,
+              borderRadius: BorderRadius.circular(10.0),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.2),
+                spreadRadius: isTransparent ? 2 : 0,
+                blurRadius: isTransparent ? 5 : 0,
+                offset: Offset( isTransparent ? 0 : 0, isTransparent ? 3 : 0), // changes position of shadow
+              ),
+            ]
           ),
+          padding: EdgeInsets.all(10.0),
         ),
         Container(
           width: Get.width,
@@ -34,11 +40,11 @@ class MenuContainer extends StatelessWidget {
           child: Row(
             children: [
               Container(
-                height: 50,
-                child: Image.asset(image.toString()),
+                height: 40.0,
+                child: isTransparent ? Image.network(image.toString(),width: 40.0,height: 50.0,) : Image.asset(image.toString(),width: 40.0,height: 50.0,),
               ),
               SizedBox(width: 10.0,),
-              TextWidget(text: text, size: textSize,color: Colors.white,isBold: true,)
+              TextWidget(text: text, size: textSize,color: Colors.black)
             ],
           ),
         ),

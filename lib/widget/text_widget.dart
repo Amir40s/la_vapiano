@@ -6,7 +6,7 @@ class TextWidget extends StatelessWidget {
    Color color;
   final double size;
   bool isBold;
-  var fontFamily;
+  var fontFamily,textAlignment;
   bool italic;
 
    TextWidget(
@@ -16,6 +16,7 @@ class TextWidget extends StatelessWidget {
     required this.size,
     this.isBold = false,
     this.fontFamily = '',
+    this.textAlignment = TextAlign.start,
     this.italic = false
   });
 
@@ -30,8 +31,9 @@ class TextWidget extends StatelessWidget {
         fontSize: size,
         fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
         fontStyle: italic ? FontStyle.italic : FontStyle.normal,
-        fontFamily: fontFamily
+        fontFamily: fontFamily,
       ),
+      textAlign: textAlignment,
     );
   }
 }

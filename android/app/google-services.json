@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "833154955499",
+    "project_id": "lavapiano",
+    "storage_bucket": "lavapiano.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:833154955499:android:dcf7e9fd1658afc8a926ae",
+        "android_client_info": {
+          "package_name": "com.example.la_vapiano"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3-HTHVndgtrxyC7m7pPPiGoGh5Oe8nWc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

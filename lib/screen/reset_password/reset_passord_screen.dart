@@ -1,12 +1,20 @@
+import 'dart:convert';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:la_vapiano/API/Api.dart';
+import 'package:la_vapiano/provider/value_provider.dart';
 import 'package:la_vapiano/utils/constants.dart';
-import 'package:la_vapiano/widget/text_widget.dart';
+import 'package:la_vapiano/widget/header.dart';
+import 'package:provider/provider.dart';
 
+import '../../widget/button_loading_widget.dart';
 import '../../widget/button_widget.dart';
 import '../../widget/custom_textfield.dart';
+import 'package:http/http.dart' as http;
 
 class ResetPasswordScreen extends StatelessWidget {
    ResetPasswordScreen({super.key});
@@ -15,63 +23,64 @@ class ResetPasswordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: primaryColor,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 20,),
-              GestureDetector(
-                onTap: (){
-                  Get.back();
-                },
-                child: Container(
-                  width: 25.0,
-                  height: 25.0,
-                  child: Image.asset(ic_back),
-                ),
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Header(text: "Forgot Password"),
+              SizedBox(height: 20,),
+              Container(
+                width: Get.width,
+                height: 150.0,
+                child: Image.asset(lock_image),
               ),
 
-                SizedBox(height: 20,),
-                Container(
-                  width: Get.width,
-                  height: 150.0,
-                  child: Image.asset(lock_image),
-                ),
 
-                SizedBox(height: 20,),
-                Container(
-                    child: Center(child: TextWidget(text: "Reset your password ", size: 18.0,color: secondaryColor,))),
               SizedBox(height: 10.0,),
-                Container(
-                    child: Center(child: TextWidget(text: "We have sent a four digit code on your phone / email", size: 12.0,))),
+              CustomTextField(hintText: "Enter Email Address", controller: controller),
 
+              SizedBox(height: 40.0,),
+              Consumer<ValueProvider>(
+              builder: (context,provider,index){
+                return  provider.isLoading == false ? ButtonWidget(
+                    text: "Send Request",
+                    onClicked: (){
+                      provider.setLoading(true);
+                      sendForgotRequest(context);
+                    },
+                    width: Get.width, height: 60.0) :
+                ButtonLoadingWidget(width: MediaQuery.sizeOf(context).width, height: 60.0);;
+              },
+              ),
 
-                SizedBox(height: 40.0,),
-               TextWidget(text: "New Password", size: 12.0),
-                SizedBox(height: 10.0,),
-                CustomTextField(hintText: "New Password", controller: controller),
-
-                SizedBox(height: 10.0,),
-               TextWidget(text: "Confirm Password", size: 12.0),
-                SizedBox(height: 10.0,),
-                CustomTextField(hintText: "Confirm Password", controller: controller),
-
-                SizedBox(height: 40.0,),
-                ButtonWidget(
-                    text: "Reset Password",
-                    onClicked: (){},
-                    width: Get.width, height: 60.0),
-
-              ],
-            ),
+            ],
           ),
         ),
       ),
     );
+  }
+
+  void sendForgotRequest(context) async{
+    http.Response response = await http.post(Uri.parse(API_URL),
+        body: {
+      "action" : ApiAction.FORGOT_PASSWORD,
+      "resetme" : "1",
+      "email" : controller.text.toString()
+    });
+
+    print(response.statusCode);
+    var data = jsonDecode(response.body.toString());
+    if(response.statusCode == 200){
+      Provider.of<ValueProvider>(context,listen: false).setLoading(false);
+      Get.snackbar("Request Send Successfully", data["message"]);
+    }else{
+      Provider.of<ValueProvider>(context,listen: false).setLoading(false);
+      Get.snackbar("Request Failed", data["message"]);
+    }
+
   }
 }

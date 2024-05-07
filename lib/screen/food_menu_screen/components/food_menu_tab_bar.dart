@@ -1,6 +1,7 @@
 import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:la_vapiano/utils/constants.dart';
 
 import '../../../utils/app_text.dart';
 
@@ -37,7 +38,7 @@ class _FoodsTabBarState extends State<FoodsTabBar> with TickerProviderStateMixin
             children: <Widget>[
               ButtonsTabBar(
                 controller: widget.controller,
-                backgroundColor: Colors.red,
+                backgroundColor: primaryColor,
                 unselectedBackgroundColor:
                 Colors.grey.withOpacity(0.2),
                 labelStyle: const TextStyle(
@@ -54,11 +55,12 @@ class _FoodsTabBarState extends State<FoodsTabBar> with TickerProviderStateMixin
                 buttonMargin:
                 const EdgeInsets.symmetric(horizontal: 20),
                 radius: 15,
-                tabs: const [
-                  Tab(text: italian_food_text),
-                  Tab(text: special_food_text),
-                  Tab(text: spanish_food_text),
-                  Tab(text: kids_meal_text),
+                tabs:  [
+                  Tab(icon: Icon(Icons.arrow_right_alt),text: italian_food_text),
+                  Tab(icon: Icon(Icons.arrow_right_alt),text: special_food_text),
+                  Tab(icon: Icon(Icons.arrow_right_alt),text: spanish_food_text),
+                  Tab(icon: Icon(Icons.arrow_right_alt),text: kids_meal_text),
+
                 ],
               ),
             ],
@@ -66,5 +68,9 @@ class _FoodsTabBarState extends State<FoodsTabBar> with TickerProviderStateMixin
         ),
       ),
     );
+  }
+
+  Widget _itemBuilder(BuildContext context, int index) {
+    return Tab(icon: Icon(Icons.arrow_right_alt),text: italian_food_text);
   }
 }

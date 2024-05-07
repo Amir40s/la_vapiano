@@ -12,22 +12,28 @@ class ShippingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: primaryColor,
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Header(),
-            SizedBox(height: 20.0,),
+            Header(text: 'Delivery',),
             Padding(
-              padding: const EdgeInsets.only(left: 20.0),
-              child: TextWidget(text: "Shipping", size: 22.0,isBold: true,),
+              padding: const EdgeInsets.all(20.0),
+              child: TextWidget(text: "Shipping", size: 22.0,isBold: true,color: Colors.black,),
             ),
-            ListView.builder(
-                itemCount: 3,
-                shrinkWrap: true,
-                itemBuilder: _buildItems
-            )
+            Container(
+              width: Get.width,
+              color: primaryColor,
+              child: ListView.builder(
+                  itemCount: 2,
+                  shrinkWrap: true,
+                  itemBuilder: _buildItems
+              ),
+            ),
+            SizedBox(height: 10.0,),
+            Image.asset(bike_image,width: Get.width,height: 250.0,)
           ],
         ),
       ),
@@ -45,21 +51,19 @@ class ShippingScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TextWidget(text: "Order Location", size: 20.0,color: Colors.black,isBold: true,),
-          SizedBox(height: 10.0,),
+          TextWidget(text: "Order Location", size: 14.0,color: Colors.black,isBold: true,),
           Row(
             children: [
               Container(
-                  width: 60.0,
-                  height: 60.0,
+                  width: 30.0,
+                  height: 30.0,
                   child: Image.asset(ic_ship_location)),
               SizedBox(width: 10.0,),
               Container(
                 width: Get.width/2,
-                  child: TextWidget(text: "8502 Preston Rd. Inglewood,Maine 98380", size: 14.0,color: Colors.black,isBold: true,)),
+                  child: TextWidget(text: "8502 Preston Rd. Inglewood,Maine 98380", size: 12.0,color: Colors.black,isBold: false,)),
             ],
           ),
-          SizedBox(height: 10.0,)
         ]
       )
     );

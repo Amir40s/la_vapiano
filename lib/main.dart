@@ -1,19 +1,27 @@
-import 'dart:async';
 
+import 'dart:io';
+
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:la_vapiano/screen/about/about_screen.dart';
+import 'package:la_vapiano/provider/language_code_provider.dart';
+import 'package:la_vapiano/provider/value_provider.dart';
+import 'package:la_vapiano/screen/ask_language/select_language_screen.dart';
+import 'package:la_vapiano/screen/food_history/provider/history_provider.dart';
 import 'package:la_vapiano/screen/home/provider/bottom_nav_provider.dart';
-import 'package:la_vapiano/screen/must_login/must_login_screen.dart';
-import 'package:la_vapiano/screen/shipping/shipping_screen.dart';
-import 'package:la_vapiano/screen/table_slip/table_slip_screen.dart';
-import 'package:la_vapiano/start/confirm_screen.dart';
-import 'package:la_vapiano/start/login_screen.dart';
-import 'package:la_vapiano/start/splash_screen.dart';
-import 'package:la_vapiano/utils/constants.dart';
+import 'package:la_vapiano/shared_preference/shared_preference_provider.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+import 'firebase_options.dart';
+
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  FlutterError.onError = (details) {
+    FlutterError.presentError(details);
+    if (kReleaseMode) exit(1);
+  };
   runApp(const MyApp());
 }
 
@@ -27,6 +35,10 @@ class MyApp extends StatelessWidget {
 
         providers: [
           ChangeNotifierProvider(create: (_) => BottomNavBarProvider()),
+          ChangeNotifierProvider(create: (_) => ValueProvider()),
+          ChangeNotifierProvider(create: (_) => HistoryProvider()),
+          ChangeNotifierProvider(create: (_) => LanguageCodeProvider()),
+          ChangeNotifierProvider(create: (_) => SharedPreferenceProvider()),
         ],
       child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
@@ -35,7 +47,8 @@ class MyApp extends StatelessWidget {
            // colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
             useMaterial3: true,
           ),
-        home: const SplashScreen(),
+        // home: const SplashScreen(),
+        home:  SelectLanguageScreen(),
       ),
     );
     // return GetMaterialApp(

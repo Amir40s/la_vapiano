@@ -60,12 +60,15 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:la_vapiano/provider/language_code_provider.dart';
 import 'package:la_vapiano/screen/food_history/food_history_screen.dart';
 import 'package:la_vapiano/screen/home/provider/bottom_nav_provider.dart';
+import 'package:la_vapiano/utils/app_text.dart';
 import 'package:provider/provider.dart';
 
 import '../../utils/constants.dart';
 import '../about/about_screen.dart';
+import '../food_items_list/food_items_list_screen.dart';
 import '../food_menu_screen/food_menu_screen.dart';
 import '../item_menu_screen/items_menu_screen.dart';
 
@@ -77,10 +80,11 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<BottomNavBarProvider>(context);
+    final language = Provider.of<LanguageCodeProvider>(context);
 
     final List<Widget> screens = [
       //ItemsMenuScreen (),
-      FoodMenuScreen(menuName: menuName,),
+      FoodItemsListScreen(foodName: menuName,),
       AboutScreen(),
      FoodHistoryScreen()
      //  ItemsMenuScreen(),
@@ -89,8 +93,8 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: primaryColor,
-        unselectedItemColor: Colors.white,
-        selectedItemColor: Colors.black,
+        unselectedItemColor: Colors.black,
+        selectedItemColor: Colors.white,
         type: BottomNavigationBarType.fixed,
         currentIndex: provider.currentIndex,
         onTap: (index) {
@@ -99,15 +103,21 @@ class HomeScreen extends StatelessWidget {
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.menu),
-            label: "Menu",
+            label: language.languageCode == "en" ?
+            menu_en : language.languageCode == "ku" ?
+            menu_ku : menu_ar,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.info),
-            label: "About",
+            label: language.languageCode == "en" ?
+            about_en : language.languageCode == "ku" ?
+            about_ku : about_ar,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.history),
-            label: "History",
+            label: language.languageCode == "en" ?
+            history_en : language.languageCode == "ku" ?
+            history_ku : history_ar,
           ),
         ],
       ),

@@ -15,7 +15,7 @@ class AboutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.black,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,7 +49,7 @@ class AboutScreen extends StatelessWidget {
                   margin: EdgeInsets.all(20.0),
                   padding: EdgeInsets.all(10.0),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Colors.black,
                     borderRadius: BorderRadius.circular(20.0),
                   ),
                   child: SingleChildScrollView(
@@ -60,15 +60,15 @@ class AboutScreen extends StatelessWidget {
                         Container(
                           margin: EdgeInsets.only(top: 30.0),
                           padding: EdgeInsets.only(left: 20.0,right: Get.width / 5),
-                          child: TextWidget(text: about_para1_text,size: 12.0,color: Colors.black),
+                          child: TextWidget(text: about_para1_text,size: 12.0,color: Colors.white),
                         ),
                         Container(
                           padding: EdgeInsets.only(left: 20.0,right: Get.width / 5),
-                          child: TextWidget(text: about_para2_text,size: 12.0,color: Colors.black),
+                          child: TextWidget(text: about_para2_text,size: 12.0,color: Colors.white),
                         ),
                         Container(
                           padding: EdgeInsets.only(left: 20.0,right: Get.width / 5),
-                          child: TextWidget(text: about_para3_text,size: 12.0,color: Colors.black),
+                          child: TextWidget(text: about_para3_text,size: 12.0,color: Colors.white),
                         ),
                         Container(
                           margin: EdgeInsets.only(left: 20.0),

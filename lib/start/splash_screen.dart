@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:la_vapiano/screen/ask_language/select_language_screen.dart';
 import 'package:la_vapiano/screen/home/home_screen.dart';
+import 'package:la_vapiano/screen/item_menu_screen/items_menu_screen.dart';
 import 'package:la_vapiano/start/confirm_screen.dart';
 import 'package:la_vapiano/start/login_screen.dart';
 import 'package:la_vapiano/utils/constants.dart';
@@ -18,7 +19,7 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Timer(const Duration(seconds: 4),(){
       //Get.offAll(const ConfirmScreen());
-      Get.offAll( LoginScreen());
+      Get.offAll( SelectLanguageScreen());
     });
     return Scaffold(
       backgroundColor: primaryColor,

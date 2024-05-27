@@ -18,12 +18,12 @@ class ProductModel {
   String descku;
   int price;
   int discount;
-  Category category;
-  Subcategory subcategory;
+  String category;
+  String subcategory;
   String image;
-  User user;
+  String user;
   DateTime date;
-  Branch branch;
+  String branch;
   int deleted;
 
   ProductModel({
@@ -55,12 +55,12 @@ class ProductModel {
     descku: json["descku"],
     price: json["price"],
     discount: json["discount"],
-    category: categoryValues.map[json["category"]]!,
-    subcategory: subcategoryValues.map[json["subcategory"]]!,
+    category: json["category"]!,
+    subcategory: json["subcategory"]!,
     image: json["image"],
-    user: userValues.map[json["user"]]!,
+    user: json["user"]!,
     date: DateTime.parse(json["date"]),
-    branch: branchValues.map[json["branch"]]!,
+    branch: json["branch"]!,
     deleted: json["deleted"],
   );
 
@@ -74,12 +74,12 @@ class ProductModel {
     "descku": descku,
     "price": price,
     "discount": discount,
-    "category": categoryValues.reverse[category],
-    "subcategory": subcategoryValues.reverse[subcategory],
+    "category": category,
+    "subcategory": subcategory,
     "image": image,
-    "user": userValues.reverse[user],
+    "user": user,
     "date": "${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}",
-    "branch": branchValues.reverse[branch],
+    "branch": branch,
     "deleted": deleted,
   };
 }
@@ -92,41 +92,41 @@ final branchValues = EnumValues({
   "La Vapiano Cafe & Rest": Branch.LA_VAPIANO_CAFE_REST
 });
 
-enum Category {
-  ITALIAN_FOOD
-}
+// enum Category {
+//   ITALIAN_FOOD
+// }
 
-final categoryValues = EnumValues({
-  "Italian Food": Category.ITALIAN_FOOD
-});
+// final categoryValues = EnumValues({
+//   "Italian Food": Category.ITALIAN_FOOD
+// });
 
-enum Subcategory {
-  GRILLED_FOOD,
-  ITALIAN_PIZZA,
-  PASTA,
-  SALAD,
-  SANDWICH,
-  SOUP
-}
+// enum Subcategory {
+//   GRILLED_FOOD,
+//   ITALIAN_PIZZA,
+//   PASTA,
+//   SALAD,
+//   SANDWICH,
+//   SOUP
+// }
 
-final subcategoryValues = EnumValues({
-  "GrilledFood": Subcategory.GRILLED_FOOD,
-  "ItalianPizza": Subcategory.ITALIAN_PIZZA,
-  "Pasta": Subcategory.PASTA,
-  "Salad": Subcategory.SALAD,
-  "Sandwich": Subcategory.SANDWICH,
-  "Soup": Subcategory.SOUP
-});
+// final subcategoryValues = EnumValues({
+//   "GrilledFood": Subcategory.GRILLED_FOOD,
+//   "ItalianPizza": Subcategory.ITALIAN_PIZZA,
+//   "Pasta": Subcategory.PASTA,
+//   "Salad": Subcategory.SALAD,
+//   "Sandwich": Subcategory.SANDWICH,
+//   "Soup": Subcategory.SOUP
+// });
 
-enum User {
-  ALAN_SOFT2_GMAIL_COM,
-  VAPIANO
-}
-
-final userValues = EnumValues({
-  "alan.soft2@gmail.com": User.ALAN_SOFT2_GMAIL_COM,
-  "vapiano": User.VAPIANO
-});
+// enum User {
+//   ALAN_SOFT2_GMAIL_COM,
+//   VAPIANO
+// }
+//
+// final userValues = EnumValues({
+//   "alan.soft2@gmail.com": User.ALAN_SOFT2_GMAIL_COM,
+//   "vapiano": User.VAPIANO
+// });
 
 class EnumValues<T> {
   Map<String, T> map;

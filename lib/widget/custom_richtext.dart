@@ -7,13 +7,17 @@ import '../utils/constants.dart';
 class CustomRichText extends StatelessWidget {
   final VoidCallback press;
   final firstText,secondText;
-  const CustomRichText({super.key, required this.press, required this.firstText,required this.secondText});
+  var firstTextColor;
+   CustomRichText({super.key, required this.press, required this.firstText,
+    required this.secondText,
+    this.firstTextColor = Colors.white
+  });
 
   @override
   Widget build(BuildContext context) {
     return RichText(text: TextSpan(
       text: firstText,
-      style: const TextStyle(color: Colors.black),
+      style:  TextStyle(color: firstTextColor),
       children: <InlineSpan>[
         const WidgetSpan(
             alignment: PlaceholderAlignment.baseline,

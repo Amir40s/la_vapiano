@@ -21,14 +21,17 @@ class ProductsController extends GetxController{
       if(cateProduct == "null"){
         print("Run Not Filter");
         print(cateProduct);
-         products = await ApiServices().fetchProducts(menuName: foodName);
+        products = await ApiServices().fetchProducts(menuName: foodName);
       }else{
         print("Run Filter");
         print(cateProduct);
         products = await ApiServices().fetchFilterProducts(menuName: foodName, subCatMenu: cateProduct);
       }
 
+      // productList.addAll(productList.where((p0) => p0.subcategory == "salad").toList());
       productList.addAll(products);
+
+
 
       print("Product List in Controller: ${productList[1].en}");
 

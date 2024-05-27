@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -21,7 +22,7 @@ class MenuContainer extends StatelessWidget {
           width: Get.width,
           height: 60,
           decoration: BoxDecoration(
-              color: isTransparent ? Colors.white.withOpacity(0.7) :  Colors.white,
+              color: isTransparent ? primaryColor :  primaryColor,
               borderRadius: BorderRadius.circular(10.0),
             boxShadow: [
               BoxShadow(
@@ -44,7 +45,16 @@ class MenuContainer extends StatelessWidget {
                 child: isTransparent ? Image.network(image.toString(),width: 40.0,height: 50.0,) : Image.asset(image.toString(),width: 40.0,height: 50.0,),
               ),
               SizedBox(width: 10.0,),
-              TextWidget(text: text, size: textSize,color: Colors.black)
+              AutoSizeText(
+                text,
+                minFontSize: 10,
+                maxFontSize: 16,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+             // TextWidget(text: text, size: textSize,color: Colors.white,isBold: false,)
             ],
           ),
         ),

@@ -1,5 +1,5 @@
 
-const API_URL = "https://lavapino.tirewastemanagement.com/";
+const API_URL = "https://app.lavapiano.com/";
 const API_IMAGE_URL = "https://lavapiano.com/La-Vapiano/images/uploads/";
 class ApiAction{
   static const LOGIN = "login";

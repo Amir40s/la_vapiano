@@ -1,3 +1,6 @@
+
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:la_vapiano/API/model/SubCategoryModel.dart';
 import 'package:http/http.dart' as http;
@@ -20,10 +23,12 @@ class ApiServices{
 
   Future<List<ProductModel>> fetchProducts({required menuName}) async{
     print("FoodName in Product Function: ${menuName}");
+    log("////////////////////////////////  $menuName");
     try{
       var response = await http.get(Uri.parse("$API_URL/?action=${ApiAction.GET_FOOD_LIST}&category=$menuName"));
 
       print("Response: ${response.body}");
+      log("////////////////////////////////  ${response.statusCode}");
       if(response.statusCode == 200){
         return productModelFromJson(response.body);
       }else{

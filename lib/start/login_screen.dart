@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -6,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:la_vapiano/API/Api.dart';
 import 'package:la_vapiano/model/login_model.dart';
+import 'package:la_vapiano/provider/language_code_provider.dart';
 import 'package:la_vapiano/shared_preference/shared_preference_provider.dart';
 import 'package:la_vapiano/utils/app_text.dart';
 import 'package:la_vapiano/utils/constants.dart';
@@ -31,8 +33,9 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final shareprefProvider = Provider.of<SharedPreferenceProvider>(context,listen: false);
+    final languageProvider = Provider.of<LanguageCodeProvider>(context,listen: false);
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.black,
       body: SafeArea(
         child: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
@@ -42,16 +45,20 @@ class LoginScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(height: 5.0,),
-                Header(isButton: true, text: 'Sign In',),
+                Header(isButton: true, text: languageProvider.languageCode == "en" ? "Login":
+                languageProvider.languageCode == "ku" ? "چوونە ژورەوە" : "تسجيل الدخول",),
 
                 SizedBox(height: 30.0,),
-                TextWidget(text: login_head_text, size: 18.0,color: primaryColor,),
+                // TextWidget(text: login_head_text, size: 18.0,color: primaryColor,),
                 const SizedBox(height: 5.0,),
-                TextWidget(text: "Login to your account", size: 14.0,color: Colors.black,),
+                TextWidget(text: languageProvider.languageCode == "en" ? "Login":
+                languageProvider.languageCode == "ku" ? "چوونە ژورەوە" : "تسجيل الدخول", size: 14.0,color: Colors.white,),
                 SizedBox(height: 20.0,),
-                CustomTextField(hintText: "Phone", controller: phoneController),
+                CustomTextField(hintText: languageProvider.languageCode == "en" ? "Phone"
+                    : languageProvider.languageCode == "ku" ?"ژ. مۆبایل" : "رقم مۆبایل", controller: phoneController),
                 SizedBox(height: 20.0,),
-                CustomTextField(hintText: "Password", controller: passwordController),
+                CustomTextField(hintText: languageProvider.languageCode == "en" ? "Password"
+                    : languageProvider.languageCode == "ku" ? "ووشەی نهێنی" : "كلمة المرور", controller: passwordController),
                 SizedBox(height: 10.0,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -60,7 +67,8 @@ class LoginScreen extends StatelessWidget {
                      Get.to(ResetPasswordScreen());
                     },
                       firstText: "",
-                      secondText: "Forgot Password?",
+                      secondText: languageProvider.languageCode == "en" ? "Forgot Password?" :
+                      languageProvider.languageCode =="ku" ? "هەژمارت هەیە" : "نسيت كلمة السر?"
                     ),
                 ],
                 ),
@@ -69,14 +77,12 @@ class LoginScreen extends StatelessWidget {
                 Consumer<ValueProvider>(
                 builder: (context,provider,index){
                   return provider.isLoading == false ? ButtonWidget(
-                      text: "Login",
+                      text: languageProvider.languageCode == "en" ? "Login":
+                      languageProvider.languageCode == "ku" ? "چوونە ژورەوە" : "تسجيل الدخول",
                       onClicked: (){
                         provider.setLoading(true);
                         login(phoneController.text.toString(),
                             passwordController.text.toString(),context,shareprefProvider);
-
-
-
 
                       },
                       width: MediaQuery.sizeOf(context).width, height: 60.0) :
@@ -89,13 +95,11 @@ class LoginScreen extends StatelessWidget {
                 CustomRichText(press: (){
                   Get.to(CreateAccountScreen());
                 },
-                  firstText: "Don't have an account?",
-                  secondText: "Sign Up",
+                  firstText: languageProvider.languageCode == "en" ? "Don't have an account?" :
+                  languageProvider.languageCode == "ku" ? "هەژمارت نیە؟" : "ليس لديك حساب؟",
+                  secondText: languageProvider.languageCode == "en" ? "Sign Up" :
+                  languageProvider.languageCode == "ku" ? "خۆتۆمار کردن" : "تسجيل",
                 ),
-
-
-
-
 
               ],
             ),
@@ -124,14 +128,7 @@ class LoginScreen extends StatelessWidget {
          if(body["success"] == true){
            Get.snackbar("Login success", "Login successfully", duration: Duration(seconds: 2),);
            Provider.of<ValueProvider>(context,listen: false).setLoading(false);
-           LoginModel model = LoginModel(
-               username: body[ApiKey.key_username],
-               mobile: body[ApiKey.key_mobile],
-               address: body[ApiKey.key_address],
-           );
-           provider.setUserData(PrefKey.userLoginData, model).whenComplete(() {
-             Get.to(ConfirmScreen());
-           });
+           signInAuth(context);
 
          }else{
            Get.snackbar("Login Failed", body[ApiKey.key_message], duration: Duration(seconds: 2),);
@@ -147,5 +144,32 @@ class LoginScreen extends StatelessWidget {
     }catch(e){
       print(e.toString());
     }
+  }
+
+  void signInAuth(context) {
+    Future<LoginModel?> model = Provider.of<SharedPreferenceProvider>(context,listen: false).getUserData(PrefKey.userLoginData);
+    model.then((value) async{
+      print(value?.mobile);
+      print(value?.email);
+
+      try {
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
+            email: value!.email.toString(),
+            password: value.password.toString()
+        ).whenComplete(() {
+          Get.to(()=> const ConfirmScreen());
+        });
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'user-not-found') {
+          print('No user found for that email.');
+        } else if (e.code == 'wrong-password') {
+          print('Wrong password provided for that user.');
+        }
+      }
+
+    }).onError((error, stackTrace) {
+      print(error.toString());
+      print(stackTrace.toString());
+    });
   }
 }

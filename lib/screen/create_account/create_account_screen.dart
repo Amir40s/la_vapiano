@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:la_vapiano/API/Api.dart';
+import 'package:la_vapiano/provider/language_code_provider.dart';
 import 'package:la_vapiano/provider/value_provider.dart';
 import 'package:la_vapiano/start/login_screen.dart';
 import 'package:la_vapiano/utils/constants.dart';
@@ -34,8 +36,9 @@ class CreateAccountScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final shareprefProvider = Provider.of<SharedPreferenceProvider>(context,listen: false);
+    final provider = Provider.of<LanguageCodeProvider>(context,listen: false);
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.black,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -49,9 +52,10 @@ class CreateAccountScreen extends StatelessWidget {
 
 
                 SizedBox(height: 40,),
-                TextWidget(text: "Register", size: 22.0,color: primaryColor,),
+                TextWidget(text: provider.languageCode == "en" ? "Register"
+                  : provider.languageCode == "ku" ?  "" : "", size: 22.0,color: primaryColor,),
                 SizedBox(height: 10.0,),
-                TextWidget(text: "Create your new account", size: 14.0,color: Colors.black,),
+              //  TextWidget(text: "Create your new account", size: 14.0,color: Colors.white,),
 
                 SizedBox(height: 20.0,),
                 CustomTextField(hintText: "Username", controller: usernameController),
@@ -75,7 +79,7 @@ class CreateAccountScreen extends StatelessWidget {
                         textAlign: TextAlign.start,
                         text: TextSpan(
                           text: "I agree to your",
-                          style: const TextStyle(color: Colors.black),
+                          style: const TextStyle(color: Colors.white),
                           children: <InlineSpan>[
                             const WidgetSpan(
                                 alignment: PlaceholderAlignment.baseline,
@@ -93,7 +97,7 @@ class CreateAccountScreen extends StatelessWidget {
                                 child: SizedBox(width: 5.0)),
                             TextSpan(
                               text: " and",
-                              style: const TextStyle(color: Colors.black),
+                              style: const TextStyle(color: Colors.white),
                             ),
                             const WidgetSpan(
                                 alignment: PlaceholderAlignment.baseline,

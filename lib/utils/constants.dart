@@ -5,7 +5,7 @@ import 'package:get/get_core/src/get_main.dart';
 // custom font
 const oleoFont = "OleoScriptSwashCaps";
 // colors
-const primaryColor = Color(0xFFE60023);
+const primaryColor = Color(0xFFBA2A2D);
 const secondaryColor = Color(0xFFFEA116);
 const whiteColor = Color(0xFFFFFFFF);
 const bgColor = Color(0xFFFFFFFF);
@@ -24,6 +24,7 @@ const italian_food_image = "assets/images/italian_food_image.png";
 const big_burger_image = "assets/images/big_burger_image.webp";
 const cartoon_image = "assets/images/cartoon_image.webp";
 const onboard_image = "assets/images/onboard_image.webp";
+const menu_image = "assets/images/menu_taste_image.webp";
 const bike_image = "assets/images/bike_image.png";
 const login_image = "assets/images/login_image.png";
 const data_table_image = "assets/images/data_table_image.png";
@@ -51,7 +52,7 @@ const ic_special_foods = "assets/images/ic_special_food.png";
 const ic_salad = "assets/images/ic_salad.png";
 const ic_back_fancy = "assets/images/ic_back_fancy.png";
 const ic_ship_location = "assets/images/ic_ship_location.png";
-
+const ic_instagram = "assets/images/ic_instagram.png";
 
 
 

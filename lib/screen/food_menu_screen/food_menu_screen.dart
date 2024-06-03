@@ -86,7 +86,9 @@ class _FoodMenuScreenState extends State<FoodMenuScreen> {
                           child: GestureDetector(
                             onTap: (){
                               print("Current Click Name: ${subCategoryController.subCategoryList[index].en}");
-                              productsController.fetchCategory(widget.menuName,subCategoryController.subCategoryList[index].en);
+                             // productsController.categoryName.value =subCategoryController.subCategoryList[index].en.toString();
+                              productsController.setCategoryName(subCategoryController.subCategoryList[index].en.toString());
+                            //  productsController.fetchCategory(widget.menuName,subCategoryController.subCategoryList[index].en);
                             },
                             child: Container(
                                 width: 100.0,

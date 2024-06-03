@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:la_vapiano/screen/food_menu_screen/food_details_screen.dart';
@@ -61,8 +63,12 @@ class FoodItemsListScreen extends StatelessWidget {
                           child: GestureDetector(
                             onTap: (){
                               print("Current Click Name: ${subCategoryController.subCategoryList[index].en}");
+
                               productsController.fetchCategory(foodName,subCategoryController.subCategoryList[index].en);
-                            },
+                              productsController.setCategoryName(subCategoryController.subCategoryList[index].en.toString());
+
+
+                              },
                             child: Container(
                                 width: 100.0,
                                 child: Center(child:
@@ -102,100 +108,110 @@ class FoodItemsListScreen extends StatelessWidget {
                       ],
                     ),
 
-                    Align(
-                      alignment: AlignmentDirectional.topStart,
-                      child: Container(
-                          height: Get.height / 1.3,
-                          width: Get.width/2,
-                          margin: EdgeInsets.only(top: Get.height/6.0),
-                          child: ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: productsController.productList.length,
-                              itemBuilder: (context,index){
-                                return _buildListItem(context,index,productsController,languageController);
-                              }
-                          )
-                      ),
-                    ),
-          
-                    Align(
-                      alignment: AlignmentDirectional.topEnd,
-                      child: Container(
-                        height: Get.height / 1.2,
-                        width: Get.width/2,
-                        margin: EdgeInsets.only(top: Get.height/11.0),
+                    Container(
+                        height: Get.height / 1.3,
+                        width: Get.width,
+                        margin: EdgeInsets.only(top: Get.height/6.0),
                         child: ListView.builder(
                             shrinkWrap: true,
                             itemCount: productsController.productList.length,
                             itemBuilder: (context,index){
-                              return  _buildListItem(context,index,productsController,languageController);
+                              return _buildListItem(context,index,productsController,languageController);
                             }
-                        ),
-                      ),
-                    )
-          
-                    // Align(
-                    //   alignment: AlignmentDirectional.topStart,
-                    //   child: Container(
-                    //               height: Get.height / 1.3,
-                    //               width: Get.width/2,
-                    //               margin: EdgeInsets.only(top: Get.height/6.0),
-                    //               child: ItemsListBuilder(foodName: "productList",isHorizontal: false,),
-                    //             ),
-                    // ),
-                    //
-                    // Align(
-                    //   alignment: AlignmentDirectional.topEnd,
-                    //   child: Container(
-                    //     height: Get.height / 1.2,
-                    //     width: Get.width/2,
-                    //     margin: EdgeInsets.only(top: Get.height/11.0),
-                    //     child: ItemsListBuilder(foodName: "spanishFoodList",isHorizontal: false,),
-                    //   ),
-                    // )
-          
-                    // Container(
-                    //   margin: EdgeInsets.only(top: Get.height/5.0),
-                    //   child: Row(
-                    //     mainAxisAlignment: MainAxisAlignment.start,
-                    //       crossAxisAlignment: CrossAxisAlignment.start,
-                    //       children:[
-                    //         Container(
-                    //           height: Get.height / 1.3,
-                    //           width: Get.width/2,
-                    //           child: ItemsListBuilder(productList: productList,isHorizontal: false,),
-                    //         ),
-                    //         Container(
-                    //           height: Get.height / 1.3,
-                    //           width: Get.width/2,
-                    //           child: ItemsListBuilder(productList: productList,isHorizontal: false,),
-                    //         ),
-                    //         // Container(
-                    //         //   child: SingleChildScrollView(
-                    //         //     child: Column(
-                    //         //       children: [
-                    //         //         ItemsListBuilder(productList: productList,isHorizontal: false,),
-                    //         //       ],
-                    //         //     ),
-                    //         //   ),
-                    //         // ),
-                    //
-                    //       ]
-                    //   ),
-                    // ),
+                        )
+                    ),
+
+
+
+
           
                   ],
                 );
               }),
+              SizedBox(height: 30.0,)
             ],
           ),
         )
       ),
     );
   }
-
+  // controller.categoryName.toString() == controller.productList[index].subcategory
   Widget _buildListItem(BuildContext context, int index,ProductsController controller,LanguageCodeProvider languageCodeProvider) {
-    return GestureDetector(
+   log("Category $index \\\\\\\\\\\\\\\\\\\\\\\\ ${controller.categoryName.toString()}");
+    return controller.categoryName.toString() == controller.productList[index].subcategory ?
+    GestureDetector(
+      onTap: (){
+        Get.to(FoodDetailsScreen(productList: controller.productList,index: index,));
+      },
+      child: Container(
+        width: 200,
+        height: 350 ,
+
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20.0),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              spreadRadius: 5,
+              blurRadius: 7,
+              offset: Offset(0, 3), // changes position of shadow
+            ),
+          ],
+        ),
+        margin: EdgeInsets.only(left : 5.0,top : 5.0, right : 5.0,bottom : 5.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+
+
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              child:  Image.network(
+                "$API_IMAGE_URL${controller.productList[index].image}",
+                fit: BoxFit.cover,
+                width: Get.width,height: 230,
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+
+            Center(
+              child: Text(
+                languageCodeProvider.languageCode == "en" ? controller.productList[index].en
+                    :  languageCodeProvider.languageCode == "ku" ? controller.productList[index].ku :
+                controller.productList[index].ar,
+                maxLines: 1,
+                style:  TextStyle(
+                  fontSize:  18.0, fontWeight: FontWeight.bold,),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 10.0,right: 10.0),
+              child: Text(
+                languageCodeProvider.languageCode == "en" ? controller.productList[index].descen
+                    :  languageCodeProvider.languageCode == "ku" ? controller.productList[index].descku :
+                controller.productList[index].descar,textAlign: TextAlign.center,
+                maxLines: 2,
+                style:  TextStyle(fontWeight: FontWeight.normal,fontSize:  12.0 ),
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Text(
+              'IQD ${controller.productList[index].price}',
+              style: const TextStyle(color: primaryColor,fontWeight: FontWeight.bold),
+            )
+          ],
+        ),
+      ),
+    ) : controller.categoryName.toString() == "not" ?
+    GestureDetector(
       onTap: (){
         Get.to(FoodDetailsScreen(productList: controller.productList,index: index,));
       },
@@ -219,11 +235,13 @@ class FoodItemsListScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+
+
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20.0),
               ),
-              child: Image.network(
+              child:  Image.network(
                 "$API_IMAGE_URL${controller.productList[index].image}",
                 fit: BoxFit.cover,
                 width: Get.width,height: 230,
@@ -232,6 +250,7 @@ class FoodItemsListScreen extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
+
             Center(
               child: Text(
                 languageCodeProvider.languageCode == "en" ? controller.productList[index].en
@@ -245,11 +264,9 @@ class FoodItemsListScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 10.0,right: 10.0),
               child: Text(
-                '\$${
-                    languageCodeProvider.languageCode == "en" ? controller.productList[index].descen
-                        :  languageCodeProvider.languageCode == "ku" ? controller.productList[index].descku :
-                    controller.productList[index].descar
-                }',textAlign: TextAlign.center,
+                languageCodeProvider.languageCode == "en" ? controller.productList[index].descen
+                    :  languageCodeProvider.languageCode == "ku" ? controller.productList[index].descku :
+                controller.productList[index].descar,textAlign: TextAlign.center,
                 maxLines: 2,
                 style:  TextStyle(fontWeight: FontWeight.normal,fontSize:  12.0 ),
               ),
@@ -258,12 +275,13 @@ class FoodItemsListScreen extends StatelessWidget {
               height: 10,
             ),
             Text(
-              'IQD ${ controller.productList[index].price}',
+              'IQD ${controller.productList[index].price}',
               style: const TextStyle(color: primaryColor,fontWeight: FontWeight.bold),
             )
           ],
         ),
       ),
-    );
+    ) : SizedBox();
+
   }
 }

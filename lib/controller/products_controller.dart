@@ -1,20 +1,30 @@
 
+import 'dart:developer';
+
 import 'package:get/get.dart';
 import 'package:la_vapiano/API/model/product_model.dart';
 import 'package:la_vapiano/API/services/api_services.dart';
 
 class ProductsController extends GetxController{
   var isLoading = true.obs;
+  var categoryName = "not".obs;
 
  var productList = <ProductModel>[].obs;
 
  final String foodName;
     var cateProduct;
 
+
+    void setCategoryName(name){
+      categoryName.value = name;
+      update();
+    }
+
   ProductsController(this.foodName,{this.cateProduct = "null"});
 
   fetchCategory(foodName,cateProduct) async{
     print("Food Name in Controller: ${foodName}");
+    log("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ $cateProduct");
     try{
       isLoading(true);
       var products;
@@ -32,8 +42,7 @@ class ProductsController extends GetxController{
       productList.addAll(products);
 
 
-
-      print("Product List in Controller: ${productList[1].en}");
+     // print("Product List in Controller: ${productList[1].en}");
 
     }catch(e){
       print("Exception in Controller: ${e.toString()}");
@@ -42,6 +51,8 @@ class ProductsController extends GetxController{
       isLoading(false);
     }
   }
+
+
 
   @override
   void onInit() {

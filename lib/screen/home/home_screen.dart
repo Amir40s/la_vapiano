@@ -58,6 +58,7 @@
 //   }
 // }
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:la_vapiano/provider/language_code_provider.dart';
@@ -113,6 +114,7 @@ class HomeScreen extends StatelessWidget {
             about_en : language.languageCode == "ku" ?
             about_ku : about_ar,
           ),
+          if(FirebaseAuth.instance.currentUser?.uid !=null)
           BottomNavigationBarItem(
             icon: Icon(Icons.history),
             label: language.languageCode == "en" ?

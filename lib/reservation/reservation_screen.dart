@@ -12,7 +12,11 @@ import '../widget/custom_textfield.dart';
 
 class ReservationScreen extends StatelessWidget {
    ReservationScreen({super.key});
-  var controller =  TextEditingController();
+  var nameController =  TextEditingController();
+  var mobileController =  TextEditingController();
+  var poxController =  TextEditingController();
+  var dateController =  TextEditingController();
+  var timeController =  TextEditingController();
   @override
   Widget build(BuildContext context) {
     final language = Provider.of<LanguageCodeProvider>(context,listen: false);
@@ -40,7 +44,7 @@ class ReservationScreen extends StatelessWidget {
               size: 14.0,color: Colors.white,),
             SizedBox(height: 10.0,),
             CustomTextField(hintText: language.languageCode == "en" ? name_en : language.languageCode == "ku" ? name_ku
-                : name_ar, controller: controller),
+                : name_ar, controller: nameController),
             SizedBox(height: 20.0,),
             TextWidget(text: language.languageCode == "en" ? mobile_en :
                language.languageCode == "ku" ? mobile_ku
@@ -49,7 +53,7 @@ class ReservationScreen extends StatelessWidget {
             SizedBox(height: 10.0,),
             CustomTextField(hintText: language.languageCode == "en" ? mobile_en :
             language.languageCode == "ku" ? mobile_ku
-                : mobile_ar, controller: controller),
+                : mobile_ar, controller: mobileController),
             SizedBox(height: 20.0,),
 
             TextWidget(text: language.languageCode == "en" ? noOfPox_en :
@@ -59,7 +63,7 @@ class ReservationScreen extends StatelessWidget {
             SizedBox(height: 10.0,),
             CustomTextField(hintText: language.languageCode == "en" ? noOfPox_en :
             language.languageCode == "ku" ? noOfPox_ku
-                : noOfPox_ar, controller: controller),
+                : noOfPox_ar, controller: poxController),
             SizedBox(height: 20.0,),
 
             TextWidget(text: language.languageCode == "en" ? date_en :
@@ -69,7 +73,7 @@ class ReservationScreen extends StatelessWidget {
             SizedBox(height: 10.0,),
             CustomTextField(hintText: language.languageCode == "en" ? date_en :
             language.languageCode == "ku" ? date_ku
-                : date_ar, controller: controller),
+                : date_ar, controller: dateController),
             SizedBox(height: 20.0,),
 
             TextWidget(text: language.languageCode == "en" ? time_en :
@@ -78,7 +82,7 @@ class ReservationScreen extends StatelessWidget {
             SizedBox(height: 10.0,),
             CustomTextField(hintText: language.languageCode == "en" ? time_en :
             language.languageCode == "ku" ? time_ku
-                : time_ar, controller: controller),
+                : time_ar, controller: timeController),
             SizedBox(height: 20.0,),
 
             ButtonWidget(text: language.languageCode == "en" ? reservation_en : language.languageCode == "ku" ? reservation_ku
